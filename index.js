@@ -31,6 +31,7 @@ async function run() {
         // collection
         const productCollection = client.db("productDB").collection("product");
         const userCollection = client.db("userDB").collection("user");
+        const userAddToCartCollection = client.db("userAddToCartDB").collection("userAddToCart");
 
         // post product
         app.post("/product", async (req, res) => {
@@ -58,10 +59,12 @@ async function run() {
             const result = await userCollection.insertOne(user);
             res.send(result);
         });
-        app.post("/users/:id", async (req, res) => {
-            const id = req.params.id;
-            const addCartUser = req.body;
-            console.log(addCartUser);
+        // add cart to user db
+        app.post("/userAddToCart", async (req, res) => {
+            const userAddToCart = req.body;
+            console.log(userAddToCart);
+            const result = await userAddToCartCollection.insertOne(userAddToCart);
+            res.send(result);
         });
 
         // Send a ping to confirm a successful connection
