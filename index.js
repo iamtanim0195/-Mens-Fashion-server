@@ -52,11 +52,16 @@ async function run() {
             console.log(id);
         });
         // user api
-        app.post("/users", async (req, res) => {
+        app.post("/user", async (req, res) => {
             const user = req.body;
             console.log(user);
             const result = await userCollection.insertOne(user);
             res.send(result);
+        });
+        app.put("/users/:id", async (req, res) => {
+            const id = req.params.id;
+            const updateUser = req.body;
+            console.log(updateUser);
         });
 
         // Send a ping to confirm a successful connection
