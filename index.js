@@ -58,10 +58,10 @@ async function run() {
             const result = await userCollection.insertOne(user);
             res.send(result);
         });
-        app.put("/users/:id", async (req, res) => {
+        app.post("/users/:id", async (req, res) => {
             const id = req.params.id;
-            const updateUser = req.body;
-            console.log(updateUser);
+            const addCartUser = req.body;
+            console.log(addCartUser);
         });
 
         // Send a ping to confirm a successful connection
