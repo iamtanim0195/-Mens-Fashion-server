@@ -50,13 +50,37 @@ async function run() {
         // get product with id
         app.get('/product/:id', async (req, res) => {
             const id = req.params.id;
-            console.log(id);
+
             const query = {
                 _id: new ObjectId(id)
             };
-            console.log(query);
+
             const product = await productCollection.findOne(query);
             res.send(product);
+        });
+        // update or put the product
+        app.put('/product/:id', async (req, res) => {
+            const id = req.params.id;
+            const product = req.body;
+            console.log(id, product);
+            // send in db
+            const filter = {
+                _id: (id)
+            };
+            const options = {upsert: true }
+            const updateProduct = {
+                $set: {
+                    productName: product.productName,
+                    category:product.category,
+                    price:product.price, 
+                    rating:product.rating, 
+                    shortDescription:product.shortDescription, 
+                    brandName:product.brandName, 
+                    image:product.image
+                }
+            }
+            const result = await productCollection.updateOne(filter, updateProduct, options);
+            res.send(result);
         });
         // delete user
         app.delete("/users/:id", async (req, res) => {
